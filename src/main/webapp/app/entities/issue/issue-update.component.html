@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-issue-heading">Create or edit a Issue</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!issue.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="issue.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_issueTime">Issue Time</label>
+                    <div class="d-flex">
+                        <input id="field_issueTime" type="datetime-local" class="form-control" name="issueTime" [(ngModel)]="issueTime"
+                        required/>
+                    </div>
+                    <div [hidden]="!(editForm.controls.issueTime?.dirty && editForm.controls.issueTime?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.issueTime?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.issueTime?.errors?.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                        [(ngModel)]="issue.quantity" required/>
+                    <div [hidden]="!(editForm.controls.quantity?.dirty && editForm.controls.quantity?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.quantity?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.quantity?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_deliveryNoteNumber">Delivery Note Number</label>
+                    <input type="text" class="form-control" name="deliveryNoteNumber" id="field_deliveryNoteNumber"
+                        [(ngModel)]="issue.deliveryNoteNumber" required/>
+                    <div [hidden]="!(editForm.controls.deliveryNoteNumber?.dirty && editForm.controls.deliveryNoteNumber?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.deliveryNoteNumber?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_item">Item</label>
+                    <select class="form-control" id="field_item" name="item" [(ngModel)]="issue.item" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="itemOption.id === issue.item?.id ? issue.item : itemOption" *ngFor="let itemOption of items; trackBy: trackItemById">{{itemOption.code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

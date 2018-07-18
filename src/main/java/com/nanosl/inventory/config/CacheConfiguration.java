@@ -38,6 +38,11 @@ public class CacheConfiguration {
             cm.createCache(com.nanosl.inventory.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.nanosl.inventory.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.nanosl.inventory.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.nanosl.inventory.domain.Item.class.getName(), jcacheConfiguration);
+            cm.createCache(com.nanosl.inventory.domain.Item.class.getName() + ".receives", jcacheConfiguration);
+            cm.createCache(com.nanosl.inventory.domain.Item.class.getName() + ".issues", jcacheConfiguration);
+            cm.createCache(com.nanosl.inventory.domain.Receive.class.getName(), jcacheConfiguration);
+            cm.createCache(com.nanosl.inventory.domain.Issue.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

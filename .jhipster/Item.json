@@ -1,0 +1,49 @@
+{
+    "name": "Item",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "receive",
+            "otherEntityName": "receive",
+            "otherEntityRelationshipName": "item"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "issue",
+            "otherEntityName": "issue",
+            "otherEntityRelationshipName": "item"
+        }
+    ],
+    "changelogDate": "20180718154102",
+    "entityTableName": "item",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
