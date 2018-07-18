@@ -1,0 +1,27 @@
+#title: inventory
+
+entity Item{
+	code String required,
+    description String required,
+    quantity Integer required
+}
+
+entity Receive{
+	receiveTime Instant required,
+	quantity Integer required
+}
+
+entity Issue{
+	issueTime Instant required,
+	quantity Integer required,
+	 deliveryNoteNumber String required
+}
+
+relationship OneToMany{
+	Item to Receive{item(code)}
+	Item to Issue{item(code)}
+}
+
+paginate all with pagination
+service Issue, Receive with serviceClass
+#direction: down 
