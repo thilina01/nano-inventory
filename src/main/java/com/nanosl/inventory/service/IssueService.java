@@ -1,17 +1,19 @@
 package com.nanosl.inventory.service;
 
+import java.util.Optional;
+
 import com.nanosl.inventory.domain.Issue;
+import com.nanosl.inventory.domain.Item;
 import com.nanosl.inventory.repository.IssueRepository;
+import com.nanosl.inventory.repository.ItemRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.Optional;
 /**
  * Service Implementation for managing Issue.
  */
@@ -22,9 +24,11 @@ public class IssueService {
     private final Logger log = LoggerFactory.getLogger(IssueService.class);
 
     private final IssueRepository issueRepository;
+    private final ItemRepository itemRepository;
 
-    public IssueService(IssueRepository issueRepository) {
+    public IssueService(IssueRepository issueRepository, ItemRepository itemRepository) {
         this.issueRepository = issueRepository;
+        this.itemRepository = itemRepository;
     }
 
     /**
@@ -34,7 +38,14 @@ public class IssueService {
      * @return the persisted entity
      */
     public Issue save(Issue issue) {
-        log.debug("Request to save Issue : {}", issue);        return issueRepository.save(issue);
+        log.debug("Request to save Issue : {}", issue);
+
+        Item item = issue.getItem();
+        item = itemRepository.findById(item.getId()).get();
+        item.setQuantity(item.getQuantity() - issue.getQuantity());
+        itemRepository.save(item);
+
+        return issueRepository.save(issue);
     }
 
     /**
@@ -48,7 +59,6 @@ public class IssueService {
         log.debug("Request to get all Issues");
         return issueRepository.findAll(pageable);
     }
-
 
     /**
      * Get one issue by id.
